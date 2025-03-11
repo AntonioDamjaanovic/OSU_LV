@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def height_and_mass(data):
-    heights_of_people = data[:, 1]
-    weights_of_people = data[:, 2]
+    heights_of_people = data[:, 1]                      # svaki red iz 1. stupca
+    weights_of_people = data[:, 2]                      # svaki red iz 2. stupca
     plt.figure(figsize=(10,6))
-    plt.scatter(heights_of_people, weights_of_people, color='blue', label='Osobe', alpha=0.5)
+    plt.scatter(heights_of_people, weights_of_people, color='blue', label='Osobe', alpha=0.5, s=0.5)
 
     plt.title('Odnos visine i mase osobe')
     plt.xlabel('Visina (cm)')
@@ -16,11 +16,11 @@ def height_and_mass(data):
 
 # every 50th person
 def height_and_mass_every_50(data):
-    heights_of_people = data[::50, 1]
-    weights_of_people = data[::50, 2]
+    heights_of_people = data[::50, 1]                           # svaki 50ti red iz 1. stupca
+    weights_of_people = data[::50, 2]                           # svaki 50ti red iz 2. stupca
 
     plt.figure(figsize=(10,6))
-    plt.scatter(heights_of_people, weights_of_people, color='blue', label='Osobe', alpha=0.5)
+    plt.scatter(heights_of_people, weights_of_people, color='blue', label='Osoba', alpha=0.5, s=0.5)
 
     plt.title('Odnos visine i mase svake 50te osobe')
     plt.xlabel('Visina (cm)')
@@ -31,18 +31,18 @@ def height_and_mass_every_50(data):
 
 # min, max and avg height of person
 def filter_heights(data):
-    heights_of_people = data[:, 1]
+    heights_of_people = data[:, 1]                                # svaki red iz 1. stupca
     print(f'\tMin height: {heights_of_people.min()}')
     print(f'\tMax height: {heights_of_people.max()}')
     print(f'\tAverage height: {heights_of_people.mean()}')
 
 def filter_heights_of_men(data):
-    men = data[data[:, 0] == 1]
+    men = data[data[:, 0] == 1]                # svaki red iz 0. stupca gdje je vrijednost jednaka 1
     print('Men height statistics: ')
     filter_heights(men)
 
 def filter_heights_of_women(data):
-    women = data[data[:, 0] == 0]
+    women = data[data[:, 0] == 0]              # svaki red iz 0. stupca gdje je vrijednost jednaka 0
     print('Women height statistics: ')
     filter_heights(women)
 
