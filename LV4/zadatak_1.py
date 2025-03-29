@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.metrics import max_error, mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 import sklearn.linear_model as lm
@@ -35,26 +36,39 @@ def scale_sets(X_train, X_test):
     return X_train_n, X_test_n
 
 # d) dio zadatka
-def create_lin_model(X_train_n, y_train):
+def create_lin_model(X_train, y_train):
     linearModel = lm.LinearRegression()
-    linearModel.fit(X_train_n, y_train)
-    print(linearModel.coef_)
+    linearModel.fit(X_train, y_train)
+    print("Model Coefficients:", linearModel.coef_)
 
     return linearModel
 
-# e) dio zadatka
-def evaluate_model(linearModel, X_test_n, y_test):
-    y_test_p = linearModel.predict(X_test_n)
+# e) i f) dio zadatka
+def evaluate_model(linearModel, X_test, y_test, df_test):
+    y_test_pred = linearModel.predict(X_test)
 
     plt.figure()
-    plt.scatter(y_test, y_test_p, alpha=0.7)
-    plt.title('Evaluacija izlaznih veličina')
+    plt.scatter(y_test, y_test_pred, alpha=0.7)
+    plt.title('Actual vs Predicted CO2 Emissions')
+    plt.xlabel('Actual CO2 Emissions (g/km)')
+    plt.ylabel('Predicted CO2 Emissions (g/km)')
     plt.show()
 
+    MAE = mean_absolute_error(y_test, y_test_pred)
+    print(f"Mean Absolute Error: {MAE}")
+
+    max_err = max_error(y_test, y_test_pred)
+    max_err_index = np.argmax(np.abs(y_test - y_test_pred))
+    vehicle_with_max_error = df_test.iloc[max_err_index]
+    
+    print(f"Maximum Error: {max_err}")
+    print("Vehicle with Maximum Error:")
+    print(vehicle_with_max_error)
 
 def main():
     df = pd.read_csv('LV4/data_C02_emission.csv')
     numeric_columns = df.select_dtypes(include=['number'])
+    df_encoded = pd.get_dummies(df, columns=['Fuel Type'], drop_first=True)
     
 
     X = numeric_columns.drop(columns=['CO2 Emissions (g/km)'])
@@ -62,12 +76,12 @@ def main():
 
     X_train, X_test, y_train, y_test =  train_test_split(X, y, test_size=0.2, random_state=1)
 
-    #c02_and_city_consumption(X_train, X_test, y_train, y_test)
+    c02_and_city_consumption(X_train, X_test, y_train, y_test)
     X_train_n, X_test_n = scale_sets(X_train, X_test)
     
     linearModel = create_lin_model(X_train_n, y_train)
 
-    evaluate_model(linearModel, X_test_n, y_test)
+    evaluate_model(linearModel, X_test_n, y_test, df.iloc[y_test.index])
 
 
 if __name__ == '__main__':
