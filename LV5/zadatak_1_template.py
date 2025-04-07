@@ -3,11 +3,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 from sklearn.datasets import make_classification
-<<<<<<< HEAD
-=======
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
->>>>>>> 99393372f10cc7bf2e9b28f4f6ddf9e75d44707a
 from sklearn.model_selection import train_test_split
 
 
@@ -17,8 +14,6 @@ X, y = make_classification(n_samples=200, n_features=2, n_redundant=0, n_informa
 # train test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=5)
 
-<<<<<<< HEAD
-=======
 # a) dio zadatka
 plt.figure()
 plt.scatter(X_train[:,0], X_train[:,1], c=y_train, cmap='coolwarm', marker='o', label="Train Data")
@@ -77,7 +72,3 @@ plt.title("Test Data by Class")
 plt.xlabel("Feature 1")
 plt.ylabel("Feature 2")
 plt.show()
-
-
-
->>>>>>> 99393372f10cc7bf2e9b28f4f6ddf9e75d44707a
