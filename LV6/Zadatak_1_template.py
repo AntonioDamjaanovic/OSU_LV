@@ -13,6 +13,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import cross_val_score
+import seaborn as sns
 
 def plot_decision_regions(X, y, classifier, resolution=0.02):
     plt.figure()
@@ -20,7 +22,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
     markers = ('s', 'x', 'o', '^', 'v')
     colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
     cmap = ListedColormap(colors[:len(np.unique(y))])
-    
+
     # plot the decision surface
     x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
@@ -31,7 +33,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
     plt.contourf(xx1, xx2, Z, alpha=0.3, cmap=cmap)
     plt.xlim(xx1.min(), xx1.max())
     plt.ylim(xx2.min(), xx2.max())
-    
+
     # plot class examples
     for idx, cl in enumerate(np.unique(y)):
         plt.scatter(x=X[y == cl, 0],
@@ -62,14 +64,14 @@ X_train_n = sc.fit_transform(X_train)
 X_test_n = sc.transform((X_test))
 
 # Model logisticke regresije
-LogReg_model = LogisticRegression(penalty=None) 
+LogReg_model = LogisticRegression(penalty=None)
 LogReg_model.fit(X_train_n, y_train)
 
 # Evaluacija modela logisticke regresije
 y_train_p = LogReg_model.predict(X_train_n)
 y_test_p = LogReg_model.predict(X_test_n)
 
-print("Logisticka regresija: ")
+print("\nLogisticka regresija: ")
 print("Tocnost train: " + "{:0.3f}".format((accuracy_score(y_train, y_train_p))))
 print("Tocnost test: " + "{:0.3f}".format((accuracy_score(y_test, y_test_p))))
 
@@ -82,3 +84,69 @@ plt.title("Tocnost: " + "{:0.3f}".format((accuracy_score(y_train, y_train_p))))
 plt.tight_layout()
 plt.show()
 
+# KNN model
+KNN_model = KNeighborsClassifier(n_neighbors=5)
+KNN_model.fit(X_train_n, y_train)
+
+# Evaluacija KNN modela
+y_train_p_KNN = KNN_model.predict(X_train_n)
+y_test_p_KNN = KNN_model.predict(X_test_n)
+print("\nKNN klasifikacija: ")
+print("Tocnost train: " + "{:0.3f}".format((accuracy_score(y_train, y_train_p_KNN))))
+print("Tocnost test: " + "{:0.3f}".format((accuracy_score(y_test, y_test_p_KNN))))
+
+# granica odluke pomocu KNN modela
+plot_decision_regions(X_train_n, y_train, classifier=KNN_model)
+plt.xlabel('x_1')
+plt.ylabel('x_2')
+plt.legend(loc='upper left')
+plt.title("Tocnost: " + "{:0.3f}".format((accuracy_score(y_train, y_train_p_KNN))))
+plt.tight_layout()
+plt.show()
+
+# odredivanje optimalne vrijednosti K pomocu unakrsne validacije
+k_values = [i for i in range (1,30)]
+scores = []
+
+for k in k_values:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    score = cross_val_score(knn, X_train_n, y_train, cv=5)
+    scores.append(np.mean(score))
+
+sns.lineplot(x = k_values, y = scores, marker = 'o')
+plt.xlabel("K Values")
+plt.ylabel("Accuracy Score")
+plt.show()
+print(f'best k param is: {scores.index(max(scores)) + 1} with cross_val_score: {max(scores)}')
+
+# SVM model
+SVM_model = svm.SVC(kernel='rbf', gamma=1, C=0.1)
+SVM_model.fit(X_train_n, y_train)
+
+# Evaluacija SVM modela
+y_train_p_SVM = SVM_model.predict(X_train_n)
+y_test_p_SVM = SVM_model.predict(X_test_n)
+print("\nSVM klasifikacija: ")
+print("Tocnost train: " + "{:0.3f}".format((accuracy_score(y_train, y_train_p_SVM))))
+print("Tocnost test: " + "{:0.3f}".format((accuracy_score(y_test, y_test_p_SVM))))
+
+# granica odluke pomocu SVM modela
+plot_decision_regions(X_train_n, y_train, classifier=SVM_model)
+plt.xlabel('x_1')
+plt.ylabel('x_2')
+plt.legend(loc='upper left')
+plt.title("Tocnost: " + "{:0.3f}".format((accuracy_score(y_train, y_train_p_SVM))))
+plt.tight_layout()
+plt.show()
+
+# odredivanje optimalne vrijednosti C i gamma pomocu unakrsne validacije
+param_grid = {
+    'C': [1, 10, 100, 100],
+    'gamma': [10, 1, 0.1, 0.01]
+    }
+svm_gscv = GridSearchCV(estimator=svm.SVC(kernel='rbf'), param_grid = param_grid, cv=5, scoring='accuracy', n_jobs=-1)
+svm_gscv.fit(X_train_n, y_train)
+print('\n')
+print(svm_gscv.best_params_['C'])
+print(svm_gscv.best_params_['gamma'])
+print(svm_gscv.best_score_)
