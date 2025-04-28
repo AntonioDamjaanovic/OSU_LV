@@ -1,9 +1,11 @@
 import numpy as np
+import tensorflow
 from tensorflow import keras
-from tensorflow.keras import layers
+from keras import layers, utils, datasets
+#from keras.utils import to_categorical
 from tensorflow.keras.datasets import cifar10
-from tensorflow.keras.utils import to_categorical
 from matplotlib import pyplot as plt
+from tensorflow.keras.utils import to_categorical
 
 
 # ucitaj CIFAR-10 podatkovni skup
@@ -24,41 +26,57 @@ X_train_n = X_train.astype('float32')/ 255.0
 X_test_n = X_test.astype('float32')/ 255.0
 
 # 1-od-K kodiranje
-y_train = to_categorical(y_train, dtype ="uint8")
-y_test = to_categorical(y_test, dtype ="uint8")
+y_train = to_categorical(y_train).astype('uint8')
+y_test = to_categorical(y_test).astype('uint8')
 
 # CNN mreza
 model = keras.Sequential()
 model.add(layers.Input(shape=(32,32,3)))
 model.add(layers.Conv2D(filters=32, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', padding='same'))
-model.add(layers.MaxPooling2D(pool_size=(2, 2)))
+#model.add(layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', padding='same'))
+#model.add(layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(layers.Conv2D(filters=128, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(layers.Flatten())
 model.add(layers.Dense(500, activation='relu'))
+model.add(layers.Dropout(0.3))
 model.add(layers.Dense(10, activation='softmax'))
 
 model.summary()
 
+from tensorboard import program
+tb = program.TensorBoard()
+tb.configure(argv=[None, '--logdir', 'logs'])
+url = tb.launch()
+print(url)
+
+
 # definiraj listu s funkcijama povratnog poziva
 my_callbacks = [
-    keras.callbacks.TensorBoard(log_dir = 'logs/cnn',
-                                update_freq = 100)
+    keras.callbacks.TensorBoard(log_dir = 'logs/cnn_dropout',
+                                update_freq = 100),
+    keras.callbacks.EarlyStopping(monitor="val_loss",
+                                  patience = 5,
+                                  verbose = 1)
 ]
 
 model.compile(optimizer='adam',
                 loss='categorical_crossentropy',
                 metrics=['accuracy'])
 
-model.fit(X_train_n,
+half_size = X_train_n.shape[0] // 2
+X_train_half = X_train_n[:half_size,:]
+
+model.fit(X_train_half,
             y_train,
-            epochs = 40,
+            epochs = 10,
             batch_size = 64,
             callbacks = my_callbacks,
             validation_split = 0.1)
 
+score = model.evaluate(X_train_n, y_train, verbose=0)
+print(f'Tocnost na trening skupu podataka: {100.0*score[1]:.2f}')
 
 score = model.evaluate(X_test_n, y_test, verbose=0)
 print(f'Tocnost na testnom skupu podataka: {100.0*score[1]:.2f}')
