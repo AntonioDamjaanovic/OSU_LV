@@ -5,76 +5,36 @@ from sklearn.metrics import max_error, mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 import sklearn.linear_model as lm
-from sklearn . preprocessing import OneHotEncoder
-import numpy as np
+from sklearn.preprocessing import OneHotEncoder
 import matplotlib
-import matplotlib.pyplot as plt
 from sklearn.datasets import make_classification
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
-from sklearn.model_selection import train_test_split
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-from sklearn.model_selection import train_test_split
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import svm
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
 import seaborn as sns
-import matplotlib.pyplot as plt
-import numpy as np
 from scipy.cluster.hierarchy import dendrogram
 from sklearn.datasets import make_blobs, make_circles, make_moons
 from sklearn.cluster import KMeans, AgglomerativeClustering
-import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib.image as Image
-from sklearn.cluster import KMeans
-import numpy as np
 from tensorflow import keras
 from keras import layers
 from matplotlib import pyplot as plt
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
-import numpy as np
-from tensorflow import keras
-from keras import layers
-from matplotlib import pyplot as plt
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from keras import saving
 from PIL import Image
-import numpy as np
-from tensorflow import keras
-from keras import layers
-from matplotlib import pyplot as plt
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
-from keras import saving
-import numpy as np
 import tensorflow
-from tensorflow import keras
 from keras import layers, utils, datasets
-#from keras.utils import to_categorical
 from tensorflow.keras.datasets import cifar10
-from matplotlib import pyplot as plt
 from tensorflow.keras.utils import to_categorical
+
 
 # LOADING THE DATA
 data = pd.read_csv('')
