@@ -45,7 +45,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
 
 
 # ucitaj podatke
-data = pd.read_csv("Social_Network_Ads.csv")
+data = pd.read_csv("LV6/Social_Network_Ads.csv")
 print(data.info())
 
 data.hist()

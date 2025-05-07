@@ -4,7 +4,7 @@ import matplotlib.image as Image
 from sklearn.cluster import KMeans
 
 # ucitaj sliku
-img = Image.imread("imgs/test_1.jpg")
+img = Image.imread("LV7/imgs/test_1.jpg")
 
 # prikazi originalnu sliku
 plt.figure()
@@ -45,7 +45,7 @@ def new_pictures(file, n_clusters):
     plt.tight_layout()
     plt.show()
 
-    if file != 'imgs/test_4.jpg':
+    if file != 'LV7/imgs/test_4.jpg':
         img = img.astype(np.float64) / 255
     w,h,d = img.shape
     img_array = np.reshape(img, (w*h, d))

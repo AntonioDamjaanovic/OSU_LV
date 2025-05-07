@@ -26,7 +26,7 @@ def mirror_img(img):
     show_img(img)
 
 def main():
-    img = plt.imread('road.jpg')
+    img = plt.imread('LV2/road.jpg')
     img = img[:,:,0].copy()
     brighter_img = brighten_image(img, 100)
 

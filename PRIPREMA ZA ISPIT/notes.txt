@@ -1,0 +1,12 @@
+NADZIRANO UČENJE:
+    - LINEARNA REGRESIJA --> izlazna veličina y je brojčana veličina
+    - LOGISTIČKA REGRESIJA --> izlazna veličina y je diskretna ili nebrojčana veličina (binarna i višeklasna)
+    - KNN ALGORITAM --> binarni klasifikacijski problem koji nije linearno odvojiv, potrebno je skalirati podatke, memorijski i računalno zahtjevan (regresija i klasifikacija)
+    - SVM ALGORITAM --> linearni i nelinearni klasifikacijski problem, ulazni prostor je visokodimenzionalan (klasifikacija i regresija)
+
+NENADZIRANO UČENJE
+    - K SREDNJIH VRIJEDNOSTI --> particionira skup u K grupa (pomoću centara)
+
+NEURONSKE MREŽE
+    - UMJETNE --> izlazni broj neurona jednak broju klasa K, izlazna oznaka se kodira pomoću 1-od-K kodiranja (višeklasna klasifikacija)ž
+    - KONVOLUCIJSKE --> za računalni vid, on automatski izluči najvažnije značajke, dropout za overfiting
