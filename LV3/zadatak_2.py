@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # a) dio zadatka
 def co2_histogram():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     plt.figure()
     data['CO2 Emissions (g/km)'].plot(kind = 'hist', bins = 20)
@@ -12,7 +12,7 @@ def co2_histogram():
 
 # b) dio zadatka
 def scatter_city_consumption_and_co2_emission():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     data.plot.scatter(
         x = 'Fuel Consumption City (L/100km)',
@@ -25,7 +25,7 @@ def scatter_city_consumption_and_co2_emission():
 
 # c) dio zadatka
 def boxplot_highway_consumption_by_fuel_type():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     data.boxplot(column='Fuel Consumption Hwy (L/100km)', by='Fuel Type', grid=False)
     plt.title('Distribution of Highway Fuel Consumption by Fuel Type')
@@ -35,7 +35,7 @@ def boxplot_highway_consumption_by_fuel_type():
 
 # d) dio zadatka
 def bar_chart_vehicles_by_fuel_type():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     fuel_type_counts = data.groupby('Fuel Type').size().reset_index(name='Number of Vehicles')
 
@@ -48,7 +48,7 @@ def bar_chart_vehicles_by_fuel_type():
 
 # e) dio zadatka
 def bar_chart_avg_co2_by_cylinders():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     avg_co2_by_cylinders = data.groupby('Cylinders')['CO2 Emissions (g/km)'].mean().reset_index()
 
@@ -60,10 +60,10 @@ def bar_chart_avg_co2_by_cylinders():
     plt.show()
 
 def main():
-    #co2_histogram()
-    #scatter_city_consumption_and_co2_emission()
-    #boxplot_highway_consumption_by_fuel_type()
-    #bar_chart_vehicles_by_fuel_type()
+    co2_histogram()
+    scatter_city_consumption_and_co2_emission()
+    boxplot_highway_consumption_by_fuel_type()
+    bar_chart_vehicles_by_fuel_type()
     bar_chart_avg_co2_by_cylinders()
 
 if __name__ == '__main__':

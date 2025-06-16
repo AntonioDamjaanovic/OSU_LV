@@ -47,7 +47,7 @@ def filter_heights_of_women(data):
     filter_heights(women)
 
 def main():
-    data = np.genfromtxt('data.csv', delimiter=',', skip_header=1)
+    data = np.genfromtxt('LV2/data.csv', delimiter=',', skip_header=1)
 
     number_of_people = len(data)
     print(f'a) number of people: {number_of_people}')

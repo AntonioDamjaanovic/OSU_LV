@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # a) dio zadatka
 def basic_info():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     print(f'Broj mjerenja: {len(data)}\n')
     print(data.info())
@@ -24,7 +24,7 @@ def basic_info():
 
 # b) dio zadatka
 def highest_lowest_city_consumption():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     highest_city_consumption = data.sort_values(ascending = False, by = ['Fuel Consumption City (L/100km)']).head(3)
     print('Najveća potrošnja:')
@@ -36,7 +36,7 @@ def highest_lowest_city_consumption():
 
 # c) dio zadatka
 def size_of_motor_and_emission():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     filtered_motor_size = data[(data['Engine Size (L)'] >= 2.5) & (data['Engine Size (L)'] <= 3.5)]
     print(f'Broj vozila s veličinom motora između 2.5 i 2.5 L: {len(filtered_motor_size)}')
@@ -46,7 +46,7 @@ def size_of_motor_and_emission():
 
 # d) dio zadatka
 def filter_audi_cars():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     audi_cars = data[data['Make'] == 'Audi']
     num_of_audi_cars = len(audi_cars)
@@ -58,7 +58,7 @@ def filter_audi_cars():
 
 # e) dio zadatka
 def filter_by_cylinders():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     num_of_cars_by_cylinders = data.groupby('Cylinders')['Model'].count()
     print("Broj vozila po cilindrima:\n")
@@ -70,7 +70,7 @@ def filter_by_cylinders():
 
 # f) dio zadatka
 def filter_diesel_and_bensin_city_consumption():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     avg_diesel_consumption = data[data['Fuel Type'] == 'D']['Fuel Consumption City (L/100km)'].mean()
     print(f'Prosječnja gradska potrošnja dizel auta: {avg_diesel_consumption}')
@@ -84,7 +84,7 @@ def filter_diesel_and_bensin_city_consumption():
 
 # g) dio zadatka
 def diesel_car_with_max_consumption():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     highest_city_consumption = data.sort_values(ascending = False, by = ['Fuel Consumption City (L/100km)'])
     car = highest_city_consumption[(highest_city_consumption['Cylinders'] == 4) & (highest_city_consumption['Fuel Type'] == 'D')].head(1)
@@ -92,26 +92,26 @@ def diesel_car_with_max_consumption():
 
 # h) dio zadatka
 def num_of_manual_cars():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
 
     manual_cars = data[data['Transmission'].str.startswith('M')]
     print(f'Broj manualnih auta: {len(manual_cars)}')
 
 # i) dio zadatka
 def calculate_correlation():
-    data = pd.read_csv('data_C02_emission.csv')
+    data = pd.read_csv('LV3/data_C02_emission.csv')
     
     print(data.corr(numeric_only=True))
 
 def main():
-    #basic_info()
-    #highest_lowest_city_consumption()
-    #size_of_motor_and_emission()
-    #filter_audi_cars()
-    #filter_by_cylinders()
-    #filter_diesel_and_bensin_city_consumption()
-    #diesel_car_with_max_consumption()
-    #num_of_manual_cars()
+    basic_info()
+    highest_lowest_city_consumption()
+    size_of_motor_and_emission()
+    filter_audi_cars()
+    filter_by_cylinders()
+    filter_diesel_and_bensin_city_consumption()
+    diesel_car_with_max_consumption()
+    num_of_manual_cars()
     calculate_correlation()
 
 if __name__ == '__main__':
